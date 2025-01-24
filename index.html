@@ -41,19 +41,18 @@
 <body>
     <h1>Shards of the Past Character Portrait Creator</h1>
 
-    <div>
-        <label for="background">Upload Background Image:</label>
-        <input type="file" id="background" accept="image/*">
+    <div class="predefined-images" id="background-images">
+        <!-- Background images will be dynamically loaded here -->
     </div>
 
     <div class="predefined-images">
-        <img src="headshot/player_headshot_512.png" alt="Portrait 1" data-src="headshot/player_headshot_512">
-        <img src="headshot/qinara_headshot_hood_512.png" alt="Portrait 2" data-src="headshot/qinara_headshot_hood_512">
-        <img src="headshot/qinara_headshot_512.png" alt="Portrait 3" data-src="headshot/qinara_headshot_512">
-        <img src="headshot/damerek_headshot_512.png" alt="Portrait 4" data-src="headshot/damerek_headshot_512">
-        <img src="headshot/viviara_headshot_512.png" alt="Portrait 5" data-src="headshot/viviara_headshot_512">
-        <img src="headshot/kaela_headshot_512.png" alt="Portrait 6" data-src="headshot/kaela_headshot_512">
-        <img src="headshot/moria_headshot_512.png" alt="Portrait 7" data-src="headshot/moria_headshot_512">
+        <img src="headshot/player_headshot_512.png" alt="Portrait 1" data-src="headshot/player_headshot_512.png">
+        <img src="headshot/qinara_headshot_hood_512.png" alt="Portrait 2" data-src="headshot/qinara_headshot_hood_512.png">
+        <img src="headshot/qinara_headshot_512.png" alt="Portrait 3" data-src="headshot/qinara_headshot_512.png">
+        <img src="headshot/damerek_headshot_512.png" alt="Portrait 4" data-src="headshot/damerek_headshot_512.png">
+        <img src="headshot/viviara_headshot_512.png" alt="Portrait 5" data-src="headshot/viviara_headshot_512.png">
+        <img src="headshot/kaela_headshot_512.png" alt="Portrait 6" data-src="headshot/kaela_headshot_512.png">
+        <img src="headshot/moria_headshot_512.png" alt="Portrait 7" data-src="headshot/moria_headshot_512.png">
     </div>
 
     <div id="canvas-container">
@@ -66,23 +65,35 @@
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
 
-        const backgroundInput = document.getElementById('background');
         const exportButton = document.getElementById('export-button');
         const predefinedImages = document.querySelectorAll('.predefined-images img');
+        const backgroundContainer = document.getElementById('background-images');
 
         let backgroundImage = new Image();
         let portraitImage = new Image();
 
-        // Event listener for background upload
-        backgroundInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    backgroundImage.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
+        // Predefined backgrounds array
+        const backgroundFiles = [
+            "backdrop/background1.png",
+            "backdrop/background2.png",
+            "backdrop/background3.png",
+            "backdrop/background4.png",
+            "backdrop/background5.png"
+        ];
+
+        // Dynamically load background images
+        backgroundFiles.forEach((file) => {
+            const img = document.createElement('img');
+            img.src = file;
+            img.alt = file.split('/').pop();
+            img.dataset.src = file;
+            img.addEventListener('click', () => {
+                // Deselect other backgrounds
+                document.querySelectorAll('#background-images img').forEach((img) => img.classList.remove('selected'));
+                img.classList.add('selected');
+                backgroundImage.src = img.dataset.src;
+            });
+            backgroundContainer.appendChild(img);
         });
 
         // Event listener for predefined portraits

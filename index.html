@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shards of the Past - Character Portrait Creator</title>
     <div style="text-align: center; margin: 20px 0;">
-        <img src="interface/shard_name_logo.png" alt="Shards of the Past Logo" style="width: 800px; height: auto;">
+        <img src="interface/shard_name_logo.png" alt="Shards of the Past Logo" style="width: 800px; max-width: 90%; height: auto;">
     </div>
     <style>
         body {
@@ -35,9 +35,14 @@
             height: auto;
             cursor: pointer;
             border: 2px solid transparent;
+            transition: border-color 0.2s ease;
         }
         .predefined-images img.selected {
             border-color: #007BFF;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -46,13 +51,13 @@
 
     <h2>Select a Character Portrait</h2>
     <div class="predefined-images">
-        <img src="headshot/player_headshot_512.png" alt="Portrait 1" data-src="headshot/player_headshot_512.png">
-        <img src="headshot/qinara_headshot_hood_512.png" alt="Portrait 2" data-src="headshot/qinara_headshot_hood_512.png">
-        <img src="headshot/qinara_headshot_512.png" alt="Portrait 3" data-src="headshot/qinara_headshot_512.png">
-        <img src="headshot/damerek_headshot_512.png" alt="Portrait 4" data-src="headshot/damerek_headshot_512.png">
-        <img src="headshot/viviara_headshot_512.png" alt="Portrait 5" data-src="headshot/viviara_headshot_512.png">
-        <img src="headshot/kaela_headshot_512.png" alt="Portrait 6" data-src="headshot/kaela_headshot_512.png">
-        <img src="headshot/moria_headshot_512.png" alt="Portrait 7" data-src="headshot/moria_headshot_512.png">
+        <img src="headshot/player_headshot_512.png" alt="Portrait 1" aria-label="Player Portrait" data-src="headshot/player_headshot_512.png">
+        <img src="headshot/qinara_headshot_hood_512.png" alt="Portrait 2" aria-label="Qinara with Hood" data-src="headshot/qinara_headshot_hood_512.png">
+        <img src="headshot/qinara_headshot_512.png" alt="Portrait 3" aria-label="Qinara" data-src="headshot/qinara_headshot_512.png">
+        <img src="headshot/damerek_headshot_512.png" alt="Portrait 4" aria-label="Damerek" data-src="headshot/damerek_headshot_512.png">
+        <img src="headshot/viviara_headshot_512.png" alt="Portrait 5" aria-label="Viviara" data-src="headshot/viviara_headshot_512.png">
+        <img src="headshot/kaela_headshot_512.png" alt="Portrait 6" aria-label="Kaela" data-src="headshot/kaela_headshot_512.png">
+        <img src="headshot/moria_headshot_512.png" alt="Portrait 7" aria-label="Moria" data-src="headshot/moria_headshot_512.png">
     </div>
 
     <h2>Select a Background</h2>
@@ -114,6 +119,11 @@
                 portraitImage.src = img.dataset.src;
             });
         });
+
+        // Set default portrait and background
+        backgroundImage.src = backgroundFiles[0];
+        portraitImage.src = "headshot/player_headshot_512.png";
+        drawImages();
 
         backgroundImage.onload = () => drawImages();
         portraitImage.onload = () => drawImages();

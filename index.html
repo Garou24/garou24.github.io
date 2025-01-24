@@ -4,14 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shards of the Past - Character Portrait Creator</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <div style="text-align: center; margin: 20px 0;">
+        <img src="interface/shard_name_logo.png" alt="Shards of the Past Logo" style="width: 800px; max-width: 90%; height: auto;">
+    </div>
     <style>
         body {
-            font-family: 'Playfair Display', serif;
-            font-optical-sizing: auto;
-            font-weight: 400;
+            font-family: Arial, sans-serif;
             text-align: center;
             margin: 20px;
             background-color: #121212; /* Dark theme background */
@@ -68,10 +66,6 @@
     </style>
 </head>
 <body>
-    <div style="text-align: center; margin: 20px 0;">
-        <img src="interface/shard_name_logo.png" alt="Shards of the Past Logo" style="width: 800px; max-width: 90%; height: auto;">
-    </div>
-
     <h1>Character Portrait Creator</h1>
 
     <h2>Character Portraits</h2>
@@ -92,7 +86,7 @@
 
     <p style="margin-bottom: 10px;">Select any combination of character portraits and backdrops to create your custom portrait.</p>
 
-    <div id="canvas-container">
+<div id="canvas-container">
         <canvas id="canvas" width="512" height="512"></canvas>
     </div>
 
@@ -103,11 +97,13 @@
         const ctx = canvas.getContext('2d');
 
         const exportButton = document.getElementById('export-button');
+        const predefinedImages = document.querySelectorAll('.predefined-images img');
         const backgroundContainer = document.getElementById('background-images');
 
         let backgroundImage = new Image();
         let portraitImage = new Image();
 
+        // Predefined backgrounds array
         const backgroundFiles = [
             "backdrop/backdrop_battle.png",
             "backdrop/backdrop_farm.png",
@@ -118,12 +114,14 @@
             "backdrop/backdrop_trellis.png"
         ];
 
+        // Dynamically load background images
         backgroundFiles.forEach((file) => {
             const img = document.createElement('img');
             img.src = file;
             img.alt = file.split('/').pop();
             img.dataset.src = file;
             img.addEventListener('click', () => {
+                // Deselect other backgrounds
                 document.querySelectorAll('#background-images img').forEach((img) => img.classList.remove('selected'));
                 img.classList.add('selected');
                 backgroundImage.src = img.dataset.src;
@@ -131,25 +129,39 @@
             backgroundContainer.appendChild(img);
         });
 
-        const portraitImages = document.querySelectorAll('.predefined-images img');
-        portraitImages.forEach((img) => {
+        // Event listener for predefined portraits
+        predefinedImages.forEach((img) => {
             img.addEventListener('click', () => {
-                portraitImages.forEach((img) => img.classList.remove('selected'));
+                // Remove selection from other images
+                predefinedImages.forEach((img) => img.classList.remove('selected'));
+                // Highlight selected image
                 img.classList.add('selected');
+                // Set portrait image source
                 portraitImage.src = img.dataset.src;
             });
         });
 
-        backgroundImage.onload = drawImages;
-        portraitImage.onload = drawImages;
-
+        // Set default portrait and background
         backgroundImage.src = backgroundFiles[0];
         portraitImage.src = "headshot/player_headshot_512.png";
+        drawImages();
+
+        backgroundImage.onload = () => drawImages();
+        portraitImage.onload = () => drawImages();
 
         function drawImages() {
+            // Clear canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            if (backgroundImage.src) ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-            if (portraitImage.src) ctx.drawImage(portraitImage, 0, 0, canvas.width, canvas.height);
+
+            // Draw background
+            if (backgroundImage.src) {
+                ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+            }
+
+            // Draw portrait
+            if (portraitImage.src) {
+                ctx.drawImage(portraitImage, 0, 0, canvas.width, canvas.height);
+            }
         }
 
         exportButton.addEventListener('click', () => {

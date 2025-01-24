@@ -12,13 +12,16 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 20px;
+            background-color: #121212; /* Dark theme background */
+            color: #E0E0E0; /* Light text for dark background */
         }
         #canvas-container {
             position: relative;
             margin: 20px auto;
             width: 512px;
             height: 512px;
-            border: 1px solid #ccc;
+            border: 1px solid #333; /* Subtle border for dark theme */
+            background-color: #1E1E1E; /* Canvas container background */
         }
         canvas {
             width: 100%;
@@ -36,20 +39,36 @@
             cursor: pointer;
             border: 2px solid transparent;
             transition: border-color 0.2s ease;
+            background-color: #1E1E1E; /* Dark background for images */
+            border-radius: 5px; /* Slight rounding for thumbnails */
         }
         .predefined-images img.selected {
-            border-color: #007BFF;
+            border-color: #BB86FC; /* Highlight color for selected image */
         }
-        h2 {
+        h1, h2 {
             font-size: 1.5rem;
             margin-bottom: 10px;
+            color: #BB86FC; /* Accent color for headers */
+        }
+        button {
+            background-color: #333;
+            color: #E0E0E0;
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        button:hover {
+            background-color: #444;
+            border-color: #BB86FC;
         }
     </style>
 </head>
 <body>
     <h1>Character Portrait Creator</h1>
 
-    <h2>Select a Character Portrait</h2>
+    <h2>Character Portraits</h2>
     <div class="predefined-images">
         <img src="headshot/player_headshot_512.png" alt="Portrait 1" aria-label="Player Portrait" data-src="headshot/player_headshot_512.png">
         <img src="headshot/qinara_headshot_hood_512.png" alt="Portrait 2" aria-label="Qinara with Hood" data-src="headshot/qinara_headshot_hood_512.png">
@@ -60,12 +79,14 @@
         <img src="headshot/moria_headshot_512.png" alt="Portrait 7" aria-label="Moria" data-src="headshot/moria_headshot_512.png">
     </div>
 
-    <h2>Select a Background</h2>
+    <h2>Backgrounds</h2>
     <div class="predefined-images" id="background-images">
         <!-- Background images will be dynamically loaded here -->
     </div>
 
-    <div id="canvas-container">
+    <p style="margin-bottom: 10px;">Select any combination of character portraits and backdrops to create your custom portrait.</p>
+
+<div id="canvas-container">
         <canvas id="canvas" width="512" height="512"></canvas>
     </div>
 

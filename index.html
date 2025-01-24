@@ -98,66 +98,66 @@
 
     <button id="export-button">Export and Save</button>
 
-<script>
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
 
-    const exportButton = document.getElementById('export-button');
-    const backgroundContainer = document.getElementById('background-images');
+        const exportButton = document.getElementById('export-button');
+        const backgroundContainer = document.getElementById('background-images');
 
-    let backgroundImage = new Image();
-    let portraitImage = new Image();
+        let backgroundImage = new Image();
+        let portraitImage = new Image();
 
-    const backgroundFiles = [
-        "backdrop/backdrop_battle.png",
-        "backdrop/backdrop_farm.png",
-        "backdrop/backdrop_forest.png",
-        "backdrop/backdrop_house.png",
-        "backdrop/backdrop_tavern.png",
-        "backdrop/backdrop_throne_room.png",
-        "backdrop/backdrop_trellis.png"
-    ];
+        const backgroundFiles = [
+            "backdrop/backdrop_battle.png",
+            "backdrop/backdrop_farm.png",
+            "backdrop/backdrop_forest.png",
+            "backdrop/backdrop_house.png",
+            "backdrop/backdrop_tavern.png",
+            "backdrop/backdrop_throne_room.png",
+            "backdrop/backdrop_trellis.png"
+        ];
 
-    backgroundFiles.forEach((file) => {
-        const img = document.createElement('img');
-        img.src = file;
-        img.alt = file.split('/').pop();
-        img.dataset.src = file;
-        img.addEventListener('click', () => {
-            document.querySelectorAll('#background-images img').forEach((img) => img.classList.remove('selected'));
-            img.classList.add('selected');
-            backgroundImage.src = img.dataset.src;
+        backgroundFiles.forEach((file) => {
+            const img = document.createElement('img');
+            img.src = file;
+            img.alt = file.split('/').pop();
+            img.dataset.src = file;
+            img.addEventListener('click', () => {
+                document.querySelectorAll('#background-images img').forEach((img) => img.classList.remove('selected'));
+                img.classList.add('selected');
+                backgroundImage.src = img.dataset.src;
+            });
+            backgroundContainer.appendChild(img);
         });
-        backgroundContainer.appendChild(img);
-    });
 
-    const portraitImages = document.querySelectorAll('.predefined-images img');
-    portraitImages.forEach((img) => {
-        img.addEventListener('click', () => {
-            portraitImages.forEach((img) => img.classList.remove('selected'));
-            img.classList.add('selected');
-            portraitImage.src = img.dataset.src;
+        const portraitImages = document.querySelectorAll('.predefined-images img');
+        portraitImages.forEach((img) => {
+            img.addEventListener('click', () => {
+                portraitImages.forEach((img) => img.classList.remove('selected'));
+                img.classList.add('selected');
+                portraitImage.src = img.dataset.src;
+            });
         });
-    });
 
-    backgroundImage.onload = drawImages;
-    portraitImage.onload = drawImages;
+        backgroundImage.onload = drawImages;
+        portraitImage.onload = drawImages;
 
-    backgroundImage.src = backgroundFiles[0];
-    portraitImage.src = "headshot/player_headshot_512.png";
+        backgroundImage.src = backgroundFiles[0];
+        portraitImage.src = "headshot/player_headshot_512.png";
 
-    function drawImages() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if (backgroundImage.src) ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height); // Background always first
-        if (portraitImage.src) ctx.drawImage(portraitImage, 0, 0, canvas.width, canvas.height);   // Portrait always last
-    }
+        function drawImages() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (backgroundImage.src) ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+            if (portraitImage.src) ctx.drawImage(portraitImage, 0, 0, canvas.width, canvas.height);
+        }
 
-    exportButton.addEventListener('click', () => {
-        const link = document.createElement('a');
-        link.download = 'custom-portrait.png';
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-    });
-</script>
+        exportButton.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'custom-portrait.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    </script>
 </body>
 </html>
